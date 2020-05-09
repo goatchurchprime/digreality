@@ -6,8 +6,12 @@ extends ARVRController
 # var b = "text"
 var voxellodterrain; 
 var repeattriggerrecharge = 0.0;
+var rumblecountdown = 0.0; 
 var worldscale = 1.0; 
-var toolremoving = true; 
+var toolstate = 1;  # 0 hidden, 1 remove, 2 add
+
+var sphererad = 2; 
+var spherepos = 2; 
 
 func _input(event):
 	if event is InputEventKey and Input.is_key_pressed(KEY_Q):
@@ -24,44 +28,34 @@ func _ready():
 	
 func _process(delta):
 	repeattriggerrecharge = max(0, repeattriggerrecharge-delta)
-	if is_button_pressed(15) and repeattriggerrecharge == 0 and voxellodterrain:  # trigger
+	if is_button_pressed(15) and repeattriggerrecharge == 0 and toolstate != 0 and voxellodterrain:  # trigger
 		var vt = voxellodterrain.get_voxel_tool()
-		print("vt", vt)
-		vt.mode = VoxelTool.MODE_REMOVE if toolremoving else VoxelTool.MODE_ADD
+		vt.mode = VoxelTool.MODE_REMOVE if (toolstate == 1) else VoxelTool.MODE_ADD
 		vt.value = 1
-		var toolrad = $toolsphere.scale.x
-		var sphpos = $toolsphere.global_transform.origin
-		vt.do_sphere(sphpos, toolrad)
+		vt.do_sphere($toolsphere.global_transform.origin, $toolsphere.scale.x)
 		repeattriggerrecharge = 0.3
-		rumble = 1.0
-	if repeattriggerrecharge <= 0.25:
-		rumble = 0.0
+		rumblecountdown = 0.05
+		
+	rumblecountdown = max(0, rumblecountdown-delta)
+	rumble = 0.0 if rumblecountdown == 0 else 1.0
 
 func button_pressed(button_index):
 	if button_index == 14:  # touchpad
 		var j0 = get_joystick_axis(0)
 		var j1 = get_joystick_axis(1)
-		print("jj", j0, j1)
-		var sphrad = pow(j0+2, 2)-0.5
-		if abs(j1) < 0.2:
-			var prevscale = $toolsphere.scale.x; 
-			$toolsphere.scale.x = sphrad*worldscale; 
-			$toolsphere.scale.y = sphrad*worldscale; 
-			$toolsphere.scale.z = sphrad*worldscale; 
-			print("set rad", $toolsphere.scale.x)
-			$toolsphere.translation.z += prevscale - $toolsphere.scale.x 
-			
-		else:
-			sphrad = $toolsphere.scale.x/worldscale
-
-		if abs(j0) < 0.2:
-			$toolsphere.translation.z = -(sphrad + pow(j1+1, 2))*worldscale 
-			print("set transz", $toolsphere.translation.z)
-
+		var dsphererad = -1 if j0 < -0.5 else 1 if j0 > 0.5 else 0.0
+		var dspherepos = -1 if j1 < -0.5 else 1 if j1 > 0.5 else 0.0
+		rumblecountdown = 0.0 if dsphererad and dspherepos else 0.01
+		sphererad = clamp(sphererad + dsphererad*0.5, 0.5, 5.0)
+		spherepos = clamp(spherepos + dspherepos*0.5, 1.0, 8.0)
+		$toolsphere.scale.x = sphererad*worldscale; 
+		$toolsphere.scale.y = sphererad*worldscale; 
+		$toolsphere.scale.z = sphererad*worldscale; 
+		$toolsphere.translation.z = -(sphererad + spherepos)*worldscale
+		print("sphere radpos", sphererad, spherepos)
+		
 	if button_index == 2:  # grip squeeze
 		print("gripped!!!")
-		toolremoving = !toolremoving
-		$toolsphere.material_override.albedo_color = Color(0.26, 0.53, 0.91, 0.57) if toolremoving else Color(0.9, 0.0, 0.0, 0.57); 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+		toolstate = (toolstate +1) % 3
+		$toolsphere.visible = (toolstate != 0)
+		$toolsphere.material_override.albedo_color = Color(0.26, 0.53, 0.91, 0.57) if (toolstate == 1) else Color(0.9, 0.0, 0.0, 0.57); 

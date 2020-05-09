@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://terrain/noise_distorted.png" type="Image" id=1]
 [ext_resource path="res://main.gd" type="Script" id=2]
@@ -130,6 +130,9 @@ albedo_color = Color( 0.603922, 0.580392, 0.117647, 0.0823529 )
 [sub_resource type="CubeMesh" id=15]
 size = Vector3( 0.1, 0.2, 0.2 )
 
+[sub_resource type="SpatialMaterial" id=16]
+albedo_color = Color( 0.584314, 0.960784, 0.776471, 1 )
+
 [node name="Dig" type="Spatial"]
 script = ExtResource( 2 )
 
@@ -258,4 +261,6 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, -7.84585, -0.409319, 0.198331 )
 
 [node name="CSGMesh" type="CSGMesh" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.411704, 0 )
 mesh = SubResource( 15 )
+material = SubResource( 16 )

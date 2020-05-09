@@ -277,6 +277,9 @@ func _physics_process(delta):
 			# Return this back to where it was so we can use its collision shape for other things too
 			# $KinematicBody.global_transform.origin = curr_transform.origin
 
+	# look for how to keep an object aligned
+	#$KinematicBody/foot.transform.rotation_degrees.y = camera_node.transform.rotation_degrees.y; 
+
 func _input(event):
 
 	if Input.is_key_pressed(KEY_R):
