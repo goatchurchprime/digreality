@@ -143,7 +143,6 @@ world_scale = 4.0
 [node name="ARVRCamera" type="ARVRCamera" parent="ARVROrigin"]
 transform = Transform( -0.982196, 0, -0.187861, 0, 1, 0, 0.187861, 0, -0.982196, 0, 0, -1.97597 )
 current = true
-far = 600.0
 
 [node name="vr_common_shader_cache" parent="ARVROrigin/ARVRCamera" instance=ExtResource( 8 )]
 
@@ -199,6 +198,7 @@ visible = false
 
 [node name="VoxelLodTerrain" type="VoxelLodTerrain" parent="."]
 stream = SubResource( 6 )
+view_distance = 64
 material = ExtResource( 5 )
 script = ExtResource( 6 )
 
