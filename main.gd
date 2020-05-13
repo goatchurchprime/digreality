@@ -32,7 +32,10 @@ func _ready():
 		#vr.switch_scene("res://levels/DungeonInstance.tscn"); return;
 		print("Not in VR");
 
-
+	#if vr.arvr_oculus_interface:
+	#	$ARVROrigin/ARVRController_Left.buttoncontrolindex_trigger = 15
+	#	$ARVROrigin/ARVRController_Left.buttoncontrolindex_touchpad = 14
+	#	$ARVROrigin/ARVRController_Left.buttoncontrolindex_gripsqueeze = 2
 
 
 	$ARVROrigin/ARVRController_Left.voxellodterrain = $VoxelLodTerrain

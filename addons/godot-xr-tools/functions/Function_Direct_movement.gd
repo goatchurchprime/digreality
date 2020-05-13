@@ -149,6 +149,9 @@ func _physics_process(delta):
 		var left_right = controller.get_joystick_axis(0)
 		var forwards_backwards = controller.get_joystick_axis(1)
 		
+		# force disable this left-right feature
+		left_right = 0.0
+		forwards_backwards= 0.0
 		
 		# if fly_action_button_id is pressed it activates the FLY MODE
 		# if fly_action_button_id is released it deactivates the FLY MODE

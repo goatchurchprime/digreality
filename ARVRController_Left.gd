@@ -16,6 +16,8 @@ var toolstate = 1;  # 0 hidden, 1 remove, 2 add
 var sphererad = 2; 
 var spherepos = 2; 
 
+
+
 func _input(event):
 	if event is InputEventKey and Input.is_key_pressed(KEY_Q):
 		print("ggg", global_transform.origin, global_transform.basis.z)
@@ -37,10 +39,17 @@ func altertoolstate(incval):
 		else:
 			$toolsphere.material_override.albedo_color = Color(0.26, 0.93, 0.21, 0.57)
 			
-	
+
+# settings for vive (reset for quest)
+var buttoncontrolindex_trigger = 15
+var buttoncontrolindex_touchpad = 14
+var buttoncontrolindex_gripsqueeze = 2
+
+# buttons for quest are here: https://github.com/NeoSpark314/godot_oculus_quest_toolkit/blob/master/OQ_Toolkit/vr_autoload.gd#L134	
 func _process(delta):
 	repeattriggerrecharge = max(0, repeattriggerrecharge-delta)
-	if is_button_pressed(15) and repeattriggerrecharge == 0 and toolstate != 0 and voxellodterrain:  # trigger
+	
+	if is_button_pressed(buttoncontrolindex_trigger) and repeattriggerrecharge == 0 and toolstate != 0 and voxellodterrain:  # trigger
 		var vt = voxeltool # voxellodterrain.get_voxel_tool()
 		vt.mode = VoxelTool.MODE_REMOVE if (toolstate == 1) else VoxelTool.MODE_ADD
 		vt.value = 1
@@ -56,7 +65,7 @@ func _process(delta):
 		altertoolstate(0)
 	
 func button_pressed(button_index):
-	if button_index == 14:  # touchpad
+	if button_index == buttoncontrolindex_touchpad:  # touchpad
 		var j0 = get_joystick_axis(0)
 		var j1 = get_joystick_axis(1)
 		var dsphererad = -1 if j0 < -0.5 else 1 if j0 > 0.5 else 0.0
@@ -70,5 +79,5 @@ func button_pressed(button_index):
 		$toolsphere.translation.z = -(sphererad + spherepos)*worldscale
 		print("sphere radpos", sphererad, spherepos)
 		
-	if button_index == 2:  # grip squeeze
+	if button_index == buttoncontrolindex_gripsqueeze:  # grip squeeze
 		altertoolstate(1)
