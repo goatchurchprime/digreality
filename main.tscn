@@ -150,7 +150,7 @@ far = 250.0
 
 [node name="vr_common_shader_cache" parent="ARVROrigin/ARVRCamera" instance=ExtResource( 8 )]
 
-[node name="SpotLight" type="SpotLight" parent="ARVROrigin/ARVRCamera"]
+[node name="HelmetLight" type="SpotLight" parent="ARVROrigin/ARVRCamera"]
 transform = Transform( 1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 1.9, 0 )
 light_energy = 2.1
 light_bake_mode = 0
