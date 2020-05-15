@@ -143,6 +143,7 @@ script = ExtResource( 2 )
 
 [node name="ARVROrigin" type="ARVROrigin" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.40205, 0 )
+world_scale = 4.0
 
 [node name="ARVRCamera" type="ARVRCamera" parent="ARVROrigin"]
 transform = Transform( -0.982196, 0, -0.187861, 0, 1, 0, 0.187861, 0, -0.982196, 0, 0, -1.97597 )
@@ -165,6 +166,7 @@ spot_angle_attenuation = 2.54912
 script = ExtResource( 9 )
 
 [node name="CSGMesh2" type="CSGMesh" parent="ARVROrigin/ARVRController_Left"]
+transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0 )
 operation = 2
 mesh = SubResource( 1 )
 material = SubResource( 2 )
@@ -187,6 +189,7 @@ controller_id = 2
 [node name="Function_Direct_movement" parent="ARVROrigin/ARVRController_Right" instance=ExtResource( 7 )]
 
 [node name="CSGMesh" type="CSGMesh" parent="ARVROrigin/ARVRController_Right"]
+transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0 )
 operation = 2
 mesh = SubResource( 1 )
 

@@ -1,8 +1,10 @@
 # Cave VR terrain editor
+**See [demo video](https://www.youtube.com/watch?v=BsqFC-Vi3zI).**
+
 This runs on the Vive.  Download godot from http://tokisan.com/godot-binaries/ (github at [here](https://github.com/tinmanjuggernaut/voxelgame)) which have https://github.com/Zylann/godot_voxel already compiled in.
 "Godot_v3.2.2rc+cd8d43_win64.exe"  
 
-Ignore a couple of dependencies for target meshes.  On Assetlib tab download -- and install -- OpenVR Module, Oculus Quest Toolkit and Godot XR Tools - AR and VR helper library
+Ignore a couple of dependencies for target meshes.  On Assetlib tab download -- and install -- OpenVR Module, Oculus Quest Toolkit and Godot XR Tools - AR and VR helper library.
 
 Can be made to work (done with Tag v0.1) on the Oculus Quest with a lot of hassle and building from sources to create the correct android export templates; instructions are as for https://github.com/NeoSpark314/VoxelWorksQuest
 
