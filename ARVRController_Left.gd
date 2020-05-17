@@ -16,8 +16,6 @@ var toolstate = 1;  # 0 hidden, 1 remove, 2 add
 var sphererad = 2; 
 var spherepos = 2; 
 
-
-
 func _input(event):
 	if event is InputEventKey and Input.is_key_pressed(KEY_Q):
 		print("ggg", global_transform.origin, global_transform.basis.z)

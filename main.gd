@@ -17,31 +17,28 @@ func _ready():
 #		print("Needs OpenVR module downloaded into assets")
 		# also working through this tools tutorial  https://github.com/GodotVR/godot-xr-tools/wiki
 		
-	vr.initialize();
-	#vdb.initialize();
-	#vdb.load_global_statistics();
-	#vdb.load_gameplay_settings();
-	
-	vr.set_foveation_level(0);
-	
-	vr.scene_switch_root = self;
+	if false:
+		vr.initialize();   # This comes in from OQToolkit Autoload
 
-	if (!vr.inVR): # for quick testing on desktop
-		#vr.switch_scene("res://levels/MainWorld.tscn"); return;
-		#vr.switch_scene("res://levels/MainMenuRoom.tscn"); return;
-		#vr.switch_scene("res://levels/DungeonInstance.tscn"); return;
+	if (vr.inVR):
+		vr.set_foveation_level(0);
+		vr.scene_switch_root = self;
+
+	else:
 		print("Not in VR");
-
-	#if vr.arvr_oculus_interface:
-	#	$ARVROrigin/ARVRController_Left.buttoncontrolindex_trigger = 15
-	#	$ARVROrigin/ARVRController_Left.buttoncontrolindex_touchpad = 14
-	#	$ARVROrigin/ARVRController_Left.buttoncontrolindex_gripsqueeze = 2
-
-
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 	$ARVROrigin/ARVRController_Left.voxellodterrain = $VoxelLodTerrain
 	$ARVROrigin/ARVRController_Left.voxeltool = $VoxelLodTerrain.get_voxel_tool()
-	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func _input(event):
+	if event is InputEventKey and Input.is_action_pressed("ui_cancel"):
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
